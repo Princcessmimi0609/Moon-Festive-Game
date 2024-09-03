@@ -198,26 +198,26 @@ questions = [
 
 # Function to display questions in the desired format
 def display_question(question):
-    st.markdown(f"<p style='color: White; font-size: 24px;'>{question['question']}?</p>", unsafe_allow_html=True)
-    
+    st.markdown(f"<p style='color: blue; font-size: 20px;'>{question['question']}?</p>", unsafe_allow_html=True)
+
     # Display the GIF for the question if available
     if question.get('gif'):
         st.image(question['gif'], use_column_width=True)
-    
+
     user_answer = st.text_input("Enter your answer:", key=f"answer_{st.session_state.current_index}")
 
     # When the "Submit" button is clicked, show the correct answer
     if st.button("Submit", key=f"submit_{st.session_state.current_index}"):
         st.session_state.show_answer = True  # Set flag to show the correct answer
-        
+
     # Display the correct answer if the flag is set
     if st.session_state.show_answer:
-        st.write(f"Correct Answer 正確答案 : **{question['answer']}**")
-        
+        # Change font color to white for the correct answer
+        st.markdown(f"<p style='color: white; font-size: 18px;'>Correct Answer 正確答案: <b>{question['answer']}</b></p>", unsafe_allow_html=True)
+
         # Display the GIF for the correct answer if available
         if question.get('gif_answer'):
             st.image(question['gif_answer'], use_column_width=True)
-            
 
         st.write("-" * 50)  # Separator for clarity
 
@@ -231,20 +231,22 @@ def next_question():
     st.session_state.show_answer = False  # Reset the flag to hide the answer for the next question
     st.session_state.timer_start = time.time()  # Reset timer for the next question
     st.session_state.remaining_time = 180  # Reset remaining time
-    st.experimental_rerun()  # Force the interface to refresh and load the next question
+
+    # Use experimental_set_query_params to trigger a rerun
+    st.experimental_set_query_params(rerun=str(st.session_state.current_index))
 
 # Main display logic
 if st.session_state.current_index < len(questions):
     display_question(questions[st.session_state.current_index])
 else:
     st.markdown(f"### Quiz Completed! Your score: {st.session_state.score} out of {len(questions)}")
-    
+
     # Save score to leaderboard
     name = st.text_input("Enter your name for the leaderboard:")
     if st.button("Submit Score"):
         st.session_state.leaderboard.append({"name": name, "score": st.session_state.score})
         st.session_state.leaderboard = sorted(st.session_state.leaderboard, key=lambda x: x['score'], reverse=True)
-        st.experimental_rerun()  # Refresh to update leaderboard
+        st.experimental_set_query_params(rerun="1")  # Trigger rerun to update leaderboard
 
     # Display leaderboard
     st.markdown("### Leaderboard:")
@@ -256,4 +258,4 @@ else:
         st.session_state.score = 0
         st.session_state.timer_start = time.time()
         st.session_state.remaining_time = 180
-        st.experimental_rerun()  # Refresh to restart quiz
+        st.experimental_set_query_params(rerun="0")  # Trigger rerun to restart quiz
