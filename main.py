@@ -35,7 +35,7 @@ audio_html = f'''
 </audio>
 '''
 # Use Streamlit's built-in audio function to play the local audio file
-audio_file_path = "C:/Users/princ/Desktop/Python Projects/Quiz Game/audio/Moonheart.mp3"
+audio_file_path = "Moonheart.mp3"
 
 # Play audio using Streamlit's built-in function
 st.audio(audio_file_path, format="audio/mp3", start_time=0,)
