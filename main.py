@@ -25,7 +25,7 @@ page_bg_img = f'''
 '''
 
 # Encode the local audio file in Base64
-audio_base64 = get_base64_of_bin_file("The Moon Represents My Heart Piano.mp3")
+audio_base64 = get_base64_of_bin_file("Moonheart.mp3")
 
 # Embed Background Music using Base64
 audio_html = f'''
@@ -35,7 +35,7 @@ audio_html = f'''
 </audio>
 '''
 # Use Streamlit's built-in audio function to play the local audio file
-audio_file_path = "C:/Users/princ/Desktop/Python Projects/Quiz Game/audio/The Moon Represents My Heart Piano.mp3"
+audio_file_path = "C:/Users/princ/Desktop/Python Projects/Quiz Game/audio/Moonheart.mp3"
 
 # Play audio using Streamlit's built-in function
 st.audio(audio_file_path, format="audio/mp3", start_time=0,)
