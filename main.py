@@ -3,6 +3,9 @@ from PIL import Image
 import base64
 import time
 
+# Set page configuration at the top of your script
+st.set_page_config(page_title="Quiz Game", layout="centered")
+
 # Load and encode the image in Base64
 def get_base64_of_bin_file(bin_file):
     with open(bin_file, 'rb') as f:
@@ -230,9 +233,6 @@ def next_question():
     st.session_state.show_answer = False  # Reset the flag to hide the answer for the next question
     st.session_state.timer_start = time.time()  # Reset timer for the next question
     st.session_state.remaining_time = 180  # Reset remaining time
-    
-    # Use st.set_page_config to force a rerun by setting a unique title
-    st.set_page_config(page_title=f"Quiz Game - {st.session_state.current_index}")
 
 # Main display logic
 if st.session_state.current_index < len(questions):
@@ -245,7 +245,6 @@ else:
     if st.button("Submit Score"):
         st.session_state.leaderboard.append({"name": name, "score": st.session_state.score})
         st.session_state.leaderboard = sorted(st.session_state.leaderboard, key=lambda x: x['score'], reverse=True)
-        st.set_page_config(page_title="Quiz Game - Leaderboard")  # Trigger rerun to update leaderboard
 
     # Display leaderboard
     st.markdown("### Leaderboard:")
@@ -257,4 +256,4 @@ else:
         st.session_state.score = 0
         st.session_state.timer_start = time.time()
         st.session_state.remaining_time = 180
-        st.set_page_config(page_title="Quiz Game - Restart")  # Trigger rerun to restart quiz
+       
