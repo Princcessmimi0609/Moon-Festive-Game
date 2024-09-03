@@ -253,7 +253,7 @@ else:
     if st.button("Restart Quiz"):
         st.session_state.current_index = 0
         st.session_state.score = 0
-       st.session_state.show_answer = False
+        st.session_state.show_answer = False
      
         
        
