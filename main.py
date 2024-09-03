@@ -215,7 +215,8 @@ def display_question(question):
 
     # Display the correct answer if the flag is set
     if st.session_state.show_answer:
-        st.write(f"Correct Answer 正確答案 : **{question['answer']}**")      
+        # Change font color to white for the correct answer
+        st.markdown(f"<p style='color: white; font-size: 18px;'>Correct Answer 正確答案: <b>{question['answer']}</b></p>", unsafe_allow_html=True)      
         
         # Display the GIF for the correct answer if available
         if question.get('gif_answer'):
@@ -233,9 +234,6 @@ def next_question():
     st.session_state.show_answer = False  # Reset the flag to hide the answer for the next question
     st.session_state.timer_start = time.time()  # Reset timer for the next question
     st.session_state.remaining_time = 180  # Reset remaining time
-
-# Use st.set_page_config to force a rerun by setting a unique title
-    st.set_page_config(page_title=f"Quiz Game - {st.session_state.current_index}")
 
 # Main display logic
 if st.session_state.current_index < len(questions):
@@ -261,5 +259,5 @@ else:
         st.session_state.score = 0
         st.session_state.timer_start = time.time()
         st.session_state.remaining_time = 180
-        st.set_page_config(page_title="Quiz Game - Restart")  # Trigger rerun to restart quiz
+        
        
