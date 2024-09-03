@@ -233,7 +233,7 @@ def next_question():
     st.session_state.remaining_time = 180  # Reset remaining time
 
     # Use experimental_set_query_params to trigger a rerun
-    st.experimental_set_query_params(rerun=str(st.session_state.current_index))
+    st.set_query_params(rerun=str(st.session_state.current_index))
 
 # Main display logic
 if st.session_state.current_index < len(questions):
@@ -246,7 +246,7 @@ else:
     if st.button("Submit Score"):
         st.session_state.leaderboard.append({"name": name, "score": st.session_state.score})
         st.session_state.leaderboard = sorted(st.session_state.leaderboard, key=lambda x: x['score'], reverse=True)
-        st.experimental_set_query_params(rerun="1")  # Trigger rerun to update leaderboard
+         st.set_query_params(rerun="1")  # Trigger rerun to update leaderboard
 
     # Display leaderboard
     st.markdown("### Leaderboard:")
@@ -258,4 +258,4 @@ else:
         st.session_state.score = 0
         st.session_state.timer_start = time.time()
         st.session_state.remaining_time = 180
-        st.experimental_set_query_params(rerun="0")  # Trigger rerun to restart quiz
+        st.set_query_params(rerun="0")  # Trigger rerun to restart quiz
