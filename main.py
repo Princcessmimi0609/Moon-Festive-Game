@@ -246,7 +246,7 @@ else:
     if st.button("Submit Score"):
         st.session_state.leaderboard.append({"name": name, "score": st.session_state.score})
         st.session_state.leaderboard = sorted(st.session_state.leaderboard, key=lambda x: x['score'], reverse=True)
-         st.set_query_params(rerun="1")  # Trigger rerun to update leaderboard
+        st.experimental_set_query_params(rerun="1")  # Trigger rerun to update leaderboard
 
     # Display leaderboard
     st.markdown("### Leaderboard:")
