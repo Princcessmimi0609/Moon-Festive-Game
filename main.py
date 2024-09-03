@@ -209,11 +209,11 @@ def display_question(question):
     # When the "Submit" button is clicked, show the correct answer
     if st.button("Submit", key=f"submit_{st.session_state.current_index}"):
         st.session_state.show_answer = True  # Set flag to show the correct answer
-
+        
     # Display the correct answer if the flag is set
     if st.session_state.show_answer:
-        # Change font color to red for the correct answer
-        st.markdown(f"<p style='color: White; font-size: 18px;'>Correct Answer : <b>{question['answer']}</b></p>", unsafe_allow_html=True)session_state.show_answer:
+        # Change font color to white for the correct answer
+        st.markdown(f"<p style='color: white; font-size: 18px;'>Correct Answer 正確答案: <b>{question['answer']}</b></p>", unsafe_allow_html=True)
         
         # Display the GIF for the correct answer if available
         if question.get('gif_answer'):
