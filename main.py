@@ -230,7 +230,7 @@ def next_question():
     st.session_state.show_answer = False  # Reset the flag to hide the answer for the next question
     st.session_state.timer_start = time.time()  # Reset timer for the next question
     st.session_state.remaining_time = 180  # Reset remaining time
-    st.experimental_rerun()  # Force the interface to refresh and load the next question
+    st.rerun()  # Force the interface to refresh and load the next question
 
 # Main display logic
 if st.session_state.current_index < len(questions):
