@@ -212,12 +212,12 @@ def display_question(question):
         
     # Display the correct answer if the flag is set
     if st.session_state.show_answer:
-        # Change font color to white for the correct answer
-        st.markdown(f"<p style='color: white; font-size: 18px;'>Correct Answer 正確答案: <b>{question['answer']}</b></p>", unsafe_allow_html=True)
+        st.write(f"Correct Answer 正確答案 : **{question['answer']}**")
         
         # Display the GIF for the correct answer if available
         if question.get('gif_answer'):
             st.image(question['gif_answer'], use_column_width=True)
+            
 
         st.write("-" * 50)  # Separator for clarity
 
