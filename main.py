@@ -63,12 +63,6 @@ if 'score' not in st.session_state:
     st.session_state.score = 0
 if 'show_answer' not in st.session_state:
     st.session_state.show_answer = False
-if 'timer_start' not in st.session_state:
-    st.session_state.timer_start = time.time()
-if 'remaining_time' not in st.session_state:
-    st.session_state.remaining_time = 180  # 3 minutes (180 seconds)
-if 'leaderboard' not in st.session_state:
-    st.session_state.leaderboard = []
 
 # List of questions with optional GIFs
 questions = [
