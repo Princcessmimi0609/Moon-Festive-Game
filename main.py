@@ -198,9 +198,9 @@ questions = [
 
 # Function to display questions in the desired format
 def display_question(question):
-    st.markdown(f"<p style='color: blue; font-size: 20px;'>{question['question']}?</p>", unsafe_allow_html=True)
-
-        # Display the GIF for the question if available
+    st.markdown(f"**{question['question']}?**")
+    
+    # Display the GIF for the question if available
     if question.get('gif'):
         st.image(question['gif'], use_column_width=True)
     
@@ -256,4 +256,3 @@ else:
         st.session_state.timer_start = time.time()
         st.session_state.remaining_time = 180
         st.experimental_rerun()  # Refresh to restart quiz
-
