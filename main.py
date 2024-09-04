@@ -204,15 +204,15 @@ def display_question(question):
 
     user_answer = st.text_input("Enter your answer:", key=f"answer_{st.session_state.current_index}")
 
-    # When the "Submit" button is clicked, show the correct answer
+    # When the "Submit" button is clicked
     if st.button("Submit", key=f"submit_{st.session_state.current_index}"):
-        st.session_state.show_answer = True  # Set flag to show the correct answer
-
-    # Display the correct answer if the flag is set
-    if st.session_state.show_answer:
-        # Change font color to white for the correct answer
-        st.markdown(f"<p style='color: white; font-size: 18px;'>Correct Answer 正確答案: <b>{question['answer']}</b></p>", unsafe_allow_html=True)
-
+        # Check if the answer is correct
+        if user_answer.strip() == question['answer']:
+            st.session_state.score += 1  # Increment score for the correct answer
+            st.markdown(f"<p style='color: green; font-size: 18px;'>Correct! 正確! Your answer: <b>{user_answer}</b></p>", unsafe_allow_html=True)
+        else:
+            st.markdown(f"<p style='color: red; font-size: 18px;'>Incorrect! 不正確! The correct answer is: <b>{question['answer']}</b></p>", unsafe_allow_html=True)
+    
         # Display the GIF for the correct answer if available
         if question.get('gif_answer'):
             st.image(question['gif_answer'], use_column_width=True)
