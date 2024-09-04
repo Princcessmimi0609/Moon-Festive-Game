@@ -3,6 +3,9 @@ from PIL import Image
 import base64
 import time
 
+# Set page configuration at the top of your script
+st.set_page_config(page_title="Quiz Game", layout="centered")
+
 # Load and encode the image in Base64
 def get_base64_of_bin_file(bin_file):
     with open(bin_file, 'rb') as f:
@@ -25,7 +28,7 @@ page_bg_img = f'''
 '''
 
 # Encode the local audio file in Base64
-audio_base64 = get_base64_of_bin_file("C:/Users/princ/Desktop/Python Projects/Quiz Game/audio/Moonheart.mp3")
+audio_base64 = get_base64_of_bin_file("C:/Users/princ/Desktop/Python Projects/Quiz Game/audio/月亮代表我的心 The Moon Represents My Heart Piano.mp3")
 
 # Embed Background Music using Base64
 audio_html = f'''
@@ -34,15 +37,12 @@ audio_html = f'''
     Your browser does not support the audio element.
 </audio>
 '''
-# Use Streamlit's built-in audio function to play the local audio file
-audio_file_path = "C:/Users/princ/Desktop/Python Projects/Quiz Game/audio/Moonheart.mp3"
 
 # Play audio using Streamlit's built-in function
-st.audio(audio_file_path, format="audio/mp3", start_time=0,)
+st.audio(audio_base64, format="audio/mp3")
 
 # Embed background music
 st.markdown(audio_html, unsafe_allow_html=True)
-
 
 # Display an example image
 image_path = ("C:/Users/princ/Desktop/Python Projects/Quiz Game/images/moon.jpg")
@@ -52,7 +52,6 @@ st.image(image, use_column_width=True)
 # Apply CSS for background image
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
-
 # Initialize session state variables
 if 'current_index' not in st.session_state:
     st.session_state.current_index = 0
@@ -60,12 +59,6 @@ if 'score' not in st.session_state:
     st.session_state.score = 0
 if 'show_answer' not in st.session_state:
     st.session_state.show_answer = False
-if 'timer_start' not in st.session_state:
-    st.session_state.timer_start = time.time()
-if 'remaining_time' not in st.session_state:
-    st.session_state.remaining_time = 180  # 3 minutes (180 seconds)
-if 'leaderboard' not in st.session_state:
-    st.session_state.leaderboard = []
 
 # List of questions with optional GIFs
 questions = [
@@ -196,14 +189,20 @@ questions = [
 ]
 
 
+# Callback function to load the next question
+def next_question():
+    # Increment index to move to the next question
+    st.session_state.current_index += 1
+    st.session_state.show_answer = False  # Reset the flag to hide the answer for the next question
+
 # Function to display questions in the desired format
 def display_question(question):
-    st.markdown(f"**{question['question']}?**")
-    
+    st.markdown(f"<p style='color: blue; font-size: 20px;'>{question['question']}?</p>", unsafe_allow_html=True)
+
     # Display the GIF for the question if available
     if question.get('gif'):
         st.image(question['gif'], use_column_width=True)
-    
+
     user_answer = st.text_input("Enter your answer:", key=f"answer_{st.session_state.current_index}")
 
     # When the "Submit" button is clicked, show the correct answer
@@ -212,38 +211,29 @@ def display_question(question):
 
     # Display the correct answer if the flag is set
     if st.session_state.show_answer:
-        st.write(f"Correct Answer 正確答案 : **{question['answer']}**")      
-        
+        # Change font color to white for the correct answer
+        st.markdown(f"<p style='color: white; font-size: 18px;'>Correct Answer 正確答案: <b>{question['answer']}</b></p>", unsafe_allow_html=True)
+
         # Display the GIF for the correct answer if available
         if question.get('gif_answer'):
             st.image(question['gif_answer'], use_column_width=True)
 
         st.write("-" * 50)  # Separator for clarity
 
-        # Provide a "Next Question" button
-        if st.button("Next Question"):
-            next_question()
-
-# Function to load the next question
-def next_question():
-    st.session_state.current_index += 1
-    st.session_state.show_answer = False  # Reset the flag to hide the answer for the next question
-    st.session_state.timer_start = time.time()  # Reset timer for the next question
-    st.session_state.remaining_time = 180  # Reset remaining time
-    st.experimental_rerun()  # Force the interface to refresh and load the next question
+        # Provide a "Next Question" button with a callback
+        st.button("Next Question", on_click=next_question)
 
 # Main display logic
 if st.session_state.current_index < len(questions):
     display_question(questions[st.session_state.current_index])
 else:
     st.markdown(f"### Quiz Completed! Your score: {st.session_state.score} out of {len(questions)}")
-    
+
     # Save score to leaderboard
     name = st.text_input("Enter your name for the leaderboard:")
     if st.button("Submit Score"):
         st.session_state.leaderboard.append({"name": name, "score": st.session_state.score})
         st.session_state.leaderboard = sorted(st.session_state.leaderboard, key=lambda x: x['score'], reverse=True)
-        st.experimental_rerun()  # Refresh to update leaderboard
 
     # Display leaderboard
     st.markdown("### Leaderboard:")
@@ -253,6 +243,4 @@ else:
     if st.button("Restart Quiz"):
         st.session_state.current_index = 0
         st.session_state.score = 0
-        st.session_state.timer_start = time.time()
-        st.session_state.remaining_time = 180
-        st.experimental_rerun()  # Refresh to restart quiz
+        st.session_state.show_answer = False
