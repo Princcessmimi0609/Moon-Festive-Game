@@ -195,7 +195,7 @@ questions = [
 
 # Function to display questions in the desired format
 def display_question(question):
-    st.markdown(f"<p style='color: blue; font-size: 20px;'>{question['question']}?</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color: White; font-size: 20px;'>{question['question']}?</p>", unsafe_allow_html=True)
     
     # Display the GIF for the question if available
     if question.get('gif'):
