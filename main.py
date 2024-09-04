@@ -59,6 +59,10 @@ if 'score' not in st.session_state:
     st.session_state.score = 0
 if 'show_answer' not in st.session_state:
     st.session_state.show_answer = False
+if 'incorrect_attempts' not in st.session_state:
+    st.session_state.incorrect_attempts = 0  # Initialize incorrect attempts counter
+if 'leaderboard' not in st.session_state:
+    st.session_state.leaderboard = []  # Initialize leaderboard if not present
 
 # List of questions with optional GIFs
 questions = [
