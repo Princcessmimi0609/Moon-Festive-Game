@@ -217,16 +217,10 @@ def display_question(question):
             st.image(question['gif_answer'], use_column_width=True)
 
         st.write("-" * 50)  # Separator for clarity
-
-        # Provide a "Next Question" button
-        if st.button("Next Question"):
-            next_question()
-
-# Function to load the next question
-def next_question():
-    st.session_state.current_index += 1
-    st.session_state.show_answer = False  # Reset the flag to hide the answer for the next question
-    
+        
+        # Provide a "Next Question" button with a callback
+        st.button("Next Question", on_click=next_question)
+            
 # Main display logic
 if st.session_state.current_index < len(questions):
     display_question(questions[st.session_state.current_index])
