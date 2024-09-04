@@ -35,7 +35,7 @@ audio_file_path = "Moonheart.mp3"  # Use relative path
 if os.path.exists(audio_file_path):
     audio_base64 = get_base64_of_bin_file(audio_file_path)
     audio_html = f'''
-    <audio controls>
+    <audio autoplay loop>
         <source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
