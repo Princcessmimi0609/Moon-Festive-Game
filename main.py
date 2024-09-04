@@ -217,10 +217,14 @@ def display_question(question):
         if question.get('gif_answer'):
             st.image(question['gif_answer'], use_column_width=True)
 
+        st.session_state.show_answer = True  # Set flag to show the correct answer or feedback
+
         st.write("-" * 50)  # Separator for clarity
 
-        # Provide a "Next Question" button with a callback
-        st.button("Next Question", on_click=next_question)
+       # Provide a "Next Question" button only when the answer is submitted
+    if st.session_state.show_answer:
+        st.write("-" * 50)  # Separator for clarity
+        st.button("Next Question", on_click=next_question)        
 
 # Main display logic
 if st.session_state.current_index < len(questions):
