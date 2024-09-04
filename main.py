@@ -210,18 +210,20 @@ def display_question(question):
         if user_answer.strip() == question['answer']:
             st.session_state.score += 1  # Increment score for the correct answer
             st.markdown(f"<p style='color: green; font-size: 18px;'>Correct! 正確! Your answer: <b>{user_answer}</b></p>", unsafe_allow_html=True)
+            st.session_state.incorrect_attempts = 0  # Reset incorrect attempts for the next question
+            st.session_state.show_answer = True  # Set flag to show feedback
         else:
-            st.markdown(f"<p style='color: red; font-size: 18px;'>Incorrect! 不正確! The correct answer is: <b>{question['answer']}</b></p>", unsafe_allow_html=True)
-    
-        # Display the GIF for the correct answer if available
-        if question.get('gif_answer'):
-            st.image(question['gif_answer'], use_column_width=True)
+            st.session_state.incorrect_attempts += 1  # Increment incorrect attempt counter
+            st.markdown(f"<p style='color: red; font-size: 18px;'>Incorrect! 不正確! Attempts: {st.session_state.incorrect_attempts}</p>", unsafe_allow_html=True)
+            
+            # Show the correct answer if incorrect attempts reach 3
+            if st.session_state.incorrect_attempts >= 3:
+                st.markdown(f"<p style='color: white; font-size: 18px;'>The correct answer is: <b>{question['answer']}</b></p>", unsafe_allow_html=True)
+                if question.get('gif_answer'):
+                    st.image(question['gif_answer'], use_column_width=True)
+                st.session_state.show_answer = True  # Set flag to show the correct answer or feedback
 
-        st.session_state.show_answer = True  # Set flag to show the correct answer or feedback
-
-        st.write("-" * 50)  # Separator for clarity
-
-       # Provide a "Next Question" button only when the answer is submitted
+    # Provide a "Next Question" button only when the answer is submitted or incorrect attempts reach 3
     if st.session_state.show_answer:
         st.write("-" * 50)  # Separator for clarity
         st.button("Next Question", on_click=next_question)        
