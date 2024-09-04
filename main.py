@@ -217,12 +217,13 @@ def display_question(question):
         if st.button("Next Question"):
             next_question()
 
-# Callback function to load the next question
+# Function to load the next question
 def next_question():
     # Increment index to move to the next question
     st.session_state.current_index += 1
     st.session_state.show_answer = False  # Reset the flag to hide the answer for the next question
-
+    st.session_state.timer_start = time.time()  # Reset timer for the next question
+    st.session_state.remaining_time = 180  # Reset remaining time
 
 # Main display logic
 if st.session_state.current_index < len(questions):
