@@ -41,6 +41,9 @@ audio_html = f'''
 # Play audio using Streamlit's built-in function
 st.audio(audio_base64, format="audio/mp3")
 
+# Play audio using Streamlit's built-in function
+st.audio(audio_file_path, format="audio/mp3", start_time=0,)
+
 # Embed background music
 st.markdown(audio_html, unsafe_allow_html=True)
 
@@ -222,8 +225,6 @@ def next_question():
     # Increment index to move to the next question
     st.session_state.current_index += 1
     st.session_state.show_answer = False  # Reset the flag to hide the answer for the next question
-    st.session_state.timer_start = time.time()  # Reset timer for the next question
-    st.session_state.remaining_time = 180  # Reset remaining time
 
 # Main display logic
 if st.session_state.current_index < len(questions):
