@@ -219,16 +219,13 @@ def display_question(question):
             # Show the correct answer if incorrect attempts reach 3
             if st.session_state.incorrect_attempts >= 3:
                 st.markdown(f"<p style='color: white; font-size: 18px;'>The correct answer is: <b>{question['answer']}</b></p>", unsafe_allow_html=True)
+                
+                # Display the GIF for the correct answer if available
                 if question.get('gif_answer'):
                     st.image(question['gif_answer'], use_column_width=True)
-                st.session_state.show_answer = True  # Set flag to show the correct answer or feedback 
                 
-        # Display the GIF for the correct answer if available
-        if question.get('gif_answer'):
-            st.image(question['gif_answer'], use_column_width=True)
+                st.session_state.show_answer = True  # Set flag to show the correct answer or feedback
 
-        st.write("-" * 50)  # Separator for clarity
-   
     # Provide a "Next Question" button only when the answer is submitted or incorrect attempts reach 3
     if st.session_state.show_answer:
         st.write("-" * 50)  # Separator for clarity
