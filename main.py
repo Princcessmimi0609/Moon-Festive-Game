@@ -226,7 +226,6 @@ def display_question(question):
 def next_question():
     st.session_state.current_index += 1
     st.session_state.show_answer = False  # Reset the flag to hide the answer for the next question
-    st.experimental_rerun()  # Force the interface to refresh and load the next question
     
 # Main display logic
 if st.session_state.current_index < len(questions):
@@ -239,7 +238,7 @@ else:
     if st.button("Submit Score"):
         st.session_state.leaderboard.append({"name": name, "score": st.session_state.score})
         st.session_state.leaderboard = sorted(st.session_state.leaderboard, key=lambda x: x['score'], reverse=True)
-        st.experimental_rerun()  # Refresh to update leaderboard
+        
 
     # Display leaderboard
     st.markdown("### Leaderboard:")
