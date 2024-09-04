@@ -33,8 +33,14 @@ audio_file_path = "Moonheart.mp3"  # Use relative path
 
 # Ensure the audio file exists
 if os.path.exists(audio_file_path):
-    # Use Streamlit's built-in audio function to play the local audio file
-    st.audio(audio_file_path, format="audio/mp3", start_time=0)
+    audio_base64 = get_base64_of_bin_file(audio_file_path)
+    audio_html = f'''
+    <audio controls>
+        <source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    '''
+    st.markdown(audio_html, unsafe_allow_html=True)
 else:
     st.error("Audio file not found. Please check the file path.")
 
