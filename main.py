@@ -188,13 +188,6 @@ questions = [
     },
 ]
 
-
-# Callback function to load the next question
-def next_question():
-    # Increment index to move to the next question
-    st.session_state.current_index += 1
-    st.session_state.show_answer = False  # Reset the flag to hide the answer for the next question
-
 # Function to display questions in the desired format
 def display_question(question):
     st.markdown(f"<p style='color: blue; font-size: 20px;'>{question['question']}?</p>", unsafe_allow_html=True)
@@ -220,8 +213,16 @@ def display_question(question):
 
         st.write("-" * 50)  # Separator for clarity
 
-        # Provide a "Next Question" button with a callback
-        st.button("Next Question", on_click=next_question)
+        # Provide a "Next Question" button
+        if st.button("Next Question"):
+            next_question()
+
+# Callback function to load the next question
+def next_question():
+    # Increment index to move to the next question
+    st.session_state.current_index += 1
+    st.session_state.show_answer = False  # Reset the flag to hide the answer for the next question
+
 
 # Main display logic
 if st.session_state.current_index < len(questions):
