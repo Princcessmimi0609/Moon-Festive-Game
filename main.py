@@ -2,6 +2,7 @@ import streamlit as st
 from PIL import Image
 import base64
 import time
+import os # Import the os module
 
 # Set page configuration at the top of your script
 st.set_page_config(page_title="Quiz Game", layout="centered")
