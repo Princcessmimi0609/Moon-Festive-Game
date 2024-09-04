@@ -204,7 +204,7 @@ def display_question(question):
 
     user_answer = st.text_input("Enter your answer:", key=f"answer_{st.session_state.current_index}")
 
-    # When the "Submit" button is clicked
+     # When the "Submit" button is clicked
     if st.button("Submit", key=f"submit_{st.session_state.current_index}"):
         # Check if the answer is correct
         if user_answer.strip() == question['answer']:
@@ -219,15 +219,12 @@ def display_question(question):
             # Show the correct answer if incorrect attempts reach 3
             if st.session_state.incorrect_attempts >= 3:
                 st.markdown(f"<p style='color: white; font-size: 18px;'>The correct answer is: <b>{question['answer']}</b></p>", unsafe_allow_html=True)
-                
-                # Display the GIF for the correct answer if available
-                if question.get('gif_answer'):
-                    st.image(question['gif_answer'], use_column_width=True)
-                
                 st.session_state.show_answer = True  # Set flag to show the correct answer or feedback
 
-    # Provide a "Next Question" button only when the answer is submitted or incorrect attempts reach 3
+    # Display the GIF for the correct answer if available and after the answer is revealed
     if st.session_state.show_answer:
+        if question.get('gif_answer'):
+            st.image(question['gif_answer'], use_column_width=True)
         st.write("-" * 50)  # Separator for clarity
         st.button("Next Question", on_click=next_question)        
 
